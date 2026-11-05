@@ -61,6 +61,10 @@ class UserController extends Controller
         }
 
         collect($request->input('filter'))->each(function ($filter) use ($builder) {
+            // 防御保护：如果不是数组或缺少必要 key 则跳过，防止 PHP 8.4 崩溃
+            if (!is_array($filter) || !isset($filter['id']) || !isset($filter['value'])) {
+                return;
+            }
             $field = $filter['id'];
             $value = $filter['value'];
             $logic = strtolower($filter['logic'] ?? 'and');

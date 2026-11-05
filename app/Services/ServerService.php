@@ -253,12 +253,15 @@ class ServerService
         $nodeType = $node->type;
         $protocolSettings = $node->protocol_settings;
         $serverPort = $node->server_port;
+        $port = $node->port;
         $host = $node->host;
 
         $baseConfig = [
             'protocol' => $nodeType,
             'listen_ip' => '0.0.0.0',
             'server_port' => (int) $serverPort,
+            'port' => (int) $port,  //返回外部访问端口方便后端自动部署
+            'host' => $host,
             'network' => data_get($protocolSettings, 'network'),
             'networkSettings' => data_get($protocolSettings, 'network_settings') ?: null,
         ];
